@@ -13,7 +13,7 @@ export class TasksService {
   getTask(id: string) {
     return this.tasks.find((task) => task.id === id);
   }
-  async addTask(input: AddTaskInput): Promise<Task[]> {
+  async addTask(input: AddTaskInput): Promise<Task> {
     const lastTask = this.tasks.slice(-1).pop();
     const task: Task = {
       id: lastTask.id + 1,
@@ -23,7 +23,7 @@ export class TasksService {
     };
 
     this.tasks.push(task);
-    return this.tasks;
+    return task;
   }
   updateTask(id: string, inputTask: AddTaskInput) {
     const objIndex = this.tasks.findIndex((obj) => obj.id == id);
@@ -38,13 +38,17 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
-  deleteTask(id: string): Task[] {
+  deleteTask(id: string): Task {
     const taskIndex = this.tasks.findIndex((item) => item.id === id);
     if (taskIndex === -1) {
       throw new HttpException('Task not found', 404);
     }
-
-    this.tasks.splice(taskIndex, 1);
-    return this.tasks;
+    const tasks = this.tasks.splice(taskIndex, 1);
+    const tarea = new Task();
+    tarea.id = tasks[0].id;
+    tarea.title = tasks[0].title;
+    tarea.description = tasks[0].description;
+    tarea.completed = tasks[0].completed;
+    return tarea;
   }
 }

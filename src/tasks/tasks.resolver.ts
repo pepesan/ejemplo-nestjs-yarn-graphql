@@ -1,12 +1,21 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { TasksService } from './tasks.service';
 import { AddTaskInput } from './dto/add-task.input';
 // import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './models/task';
+import { PubSub } from 'apollo-server-express';
 
-@Resolver('Tasks')
+
+
+@Resolver((of) => 'Tasks')
 export class TasksResolver {
+  private pubSub = new PubSub();
   constructor(private readonly taskService: TasksService) {}
+
+  @Subscription((returns) => Task)
+  async taskAdded() {
+    return this.pubSub.asyncIterator('taskAdded');
+  }
   /*
    Consulta
    Ejemplo:
@@ -49,9 +58,12 @@ export class TasksResolver {
     }
   }
    */
-  @Mutation((type) => [Task])
+  @Mutation((type) => Task)
   async addTask(@Args('input') input: AddTaskInput) {
-    return this.taskService.addTask(input);
+    const taskAdded = await this.taskService.addTask(input);
+    console.log(taskAdded);
+    await this.pubSub.publish('taskAdded', { taskAdded: taskAdded });
+    return taskAdded;
   }
   /*
     Edit By ID

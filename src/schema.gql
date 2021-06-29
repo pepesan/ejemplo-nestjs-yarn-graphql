@@ -24,7 +24,7 @@ type Query {
 
 type Mutation {
   createUser(createUserData: CreateUserInput!): User!
-  addTask(input: AddTaskInput!): [Task!]!
+  addTask(input: AddTaskInput!): Task!
   updateTask(input: AddTaskInput!, id: String!): Task!
   deleteTask(id: String!): [Task!]!
 }
@@ -37,4 +37,8 @@ input CreateUserInput {
 input AddTaskInput {
   title: String!
   description: String!
+}
+
+type Subscription {
+  taskAdded: Task!
 }
