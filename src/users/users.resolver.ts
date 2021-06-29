@@ -1,26 +1,20 @@
-import { Resolver, Query, ResolveField, Parent, Mutation, Args } from "@nestjs/graphql";
-import { User } from './models/user';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { GetUserArgs } from './dto/get-user.args';
+import { CreateUserInput } from './dto/create-user.input';
+import { User } from './dto/user';
 import { UsersService } from './users.service';
-import { HobbiesService } from './hobbies.service';
-import { Hobby } from './models/hobby';
-import { CreateUserInput } from "./dto/create-user.input";
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export class UsersResolver {
-  constructor(
-    private usersService: UsersService,
-    private hobbiesService: HobbiesService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
+
+  @Query(() => User, { name: 'user', nullable: true })
+  getUser(@Args() getUserArgs: GetUserArgs): User {
+    return this.usersService.getUser(getUserArgs);
+  }
+
   @Mutation(() => User)
   createUser(@Args('createUserData') createUserData: CreateUserInput): User {
     return this.usersService.createUser(createUserData);
-  }
-  @Query((returns) => [User])
-  async users() {
-    return this.usersService.getAllUsers();
-  }
-  @ResolveField()
-  async hobbies(@Parent() user: User) {
-    return new Hobby();
   }
 }

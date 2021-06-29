@@ -5,8 +5,6 @@ import { AddTaskInput } from './dto/add-task.input';
 import { Task } from './models/task';
 import { PubSub } from 'apollo-server-express';
 
-
-
 @Resolver((of) => 'Tasks')
 export class TasksResolver {
   private pubSub = new PubSub();
