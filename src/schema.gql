@@ -21,6 +21,7 @@ type Task {
 scalar Date
 
 type Query {
+  getUsers: [User!]!
   user(userId: String!): User
   getTasks: [Task!]!
   getTask(id: String!): Task!

@@ -31,7 +31,7 @@ import { LoggingPluginService } from './logging-plugin/logging-plugin.service';
       provide: 'PUB_SUB',
       useValue: new PubSub(),
     },
-    LoggingPluginService,
+    // LoggingPluginService,
   ],
 })
 export class AppModule {}
