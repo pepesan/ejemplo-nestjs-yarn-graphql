@@ -14,7 +14,11 @@ type Task {
   title: String!
   description: String!
   completed: Boolean!
+  creationDate: Date!
 }
+
+"""Date custom scalar type"""
+scalar Date
 
 type Query {
   user(userId: String!): User
@@ -37,6 +41,7 @@ input CreateUserInput {
 input AddTaskInput {
   title: String!
   description: String!
+  creationDate: Date!
 }
 
 type Subscription {

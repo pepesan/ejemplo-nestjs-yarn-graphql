@@ -16,6 +16,9 @@ import { PubSub } from 'apollo-server-express';
       subscriptions: {
         keepAlive: 5000,
       },
+      buildSchemaOptions: {
+        dateScalarMode: 'timestamp', // maneja las fechas con TS
+      },
     }),
     UsersModule,
     TasksModule,

@@ -15,11 +15,14 @@ export class TasksService {
   }
   async addTask(input: AddTaskInput): Promise<Task> {
     const lastTask = this.tasks.slice(-1).pop();
+    const fecha = new Date(input.creationDate);
+    // console.log(fecha);
     const task: Task = {
       id: lastTask.id + 1,
       title: input.title,
       description: input.description,
       completed: false,
+      creationDate: fecha,
     };
 
     this.tasks.push(task);
@@ -34,6 +37,7 @@ export class TasksService {
       title: inputTask.title,
       description: inputTask.description,
       completed: false,
+      creationDate: inputTask.creationDate,
     };
     this.tasks.push(task);
     return task;
