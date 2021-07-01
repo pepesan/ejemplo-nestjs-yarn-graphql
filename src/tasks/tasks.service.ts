@@ -4,7 +4,7 @@ import { AddTaskInput } from './dto/add-task.input';
 
 @Injectable()
 export class TasksService {
-  tasks = TASKS;
+  tasks: Task[] = TASKS;
 
   getTasks() {
     return this.tasks;
@@ -17,42 +17,42 @@ export class TasksService {
     const lastTask = this.tasks.slice(-1).pop();
     const fecha = new Date(input.creationDate);
     // console.log(fecha);
-    const task: Task = {
-      id: lastTask.id + 1,
-      title: input.title,
-      description: input.description,
-      completed: false,
-      creationDate: fecha,
-    };
+    const task: Task = new Task(
+      lastTask.id + 1,
+      input.title,
+      input.description,
+      false,
+    );
 
     this.tasks.push(task);
     return task;
   }
   updateTask(id: string, inputTask: AddTaskInput) {
+    // console.log(inputTask);
+    // console.log(this.tasks);
+    this.tasks = this.tasks.map((item) => {
+      if (item.id === id) {
+        // console.log('encontrado');
+        return new Task(
+          id,
+          inputTask.title,
+          inputTask.description,
+          inputTask.completed,
+        );
+      }
+    });
+    // console.log(this.tasks);
     const objIndex = this.tasks.findIndex((obj) => obj.id == id);
-    delete this.tasks[objIndex];
-    const lastTask = this.tasks.slice(-1).pop();
-    const task = {
-      id: lastTask.id + 1,
-      title: inputTask.title,
-      description: inputTask.description,
-      completed: false,
-      creationDate: inputTask.creationDate,
-    };
-    this.tasks.push(task);
-    return task;
+    return this.tasks[objIndex];
   }
   deleteTask(id: string): Task {
-    const taskIndex = this.tasks.findIndex((item) => item.id === id);
-    if (taskIndex === -1) {
-      throw new HttpException('Task not found', 404);
-    }
-    const tasks = this.tasks.splice(taskIndex, 1);
-    const tarea = new Task();
-    tarea.id = tasks[0].id;
-    tarea.title = tasks[0].title;
-    tarea.description = tasks[0].description;
-    tarea.completed = tasks[0].completed;
+    const index = this.tasks.findIndex((item) => item.id === id);
+    const tarea = this.tasks[index];
+    // console.log(tarea);
+    // console.log(this.tasks);
+    this.tasks.splice(index, 1);
+    // console.log(this.tasks);
+    //console.log(tarea);
     return tarea;
   }
 }

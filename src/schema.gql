@@ -31,18 +31,20 @@ type Mutation {
   createUser(createUserData: CreateUserInput!): User!
   addTask(input: AddTaskInput!): Task!
   updateTask(input: AddTaskInput!, id: String!): Task!
-  deleteTask(id: String!): [Task!]!
+  deleteTask(id: String!): Task!
 }
 
 input CreateUserInput {
   email: String!
   age: Float!
+  isSubscribed: Boolean
 }
 
 input AddTaskInput {
   title: String!
   description: String!
   creationDate: Date!
+  completed: Boolean!
 }
 
 type Subscription {
