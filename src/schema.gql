@@ -39,6 +39,7 @@ type Mutation {
 input CreateUserInput {
   email: String!
   age: Float!
+  isSubscribed: Boolean
 }
 
 input AddTaskInput {
