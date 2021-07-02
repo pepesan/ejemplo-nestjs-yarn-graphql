@@ -67,7 +67,7 @@ export class TasksResolver {
   @Mutation((type) => Task)
   async addTask(@Args('input') input: AddTaskInput) {
     const taskAdded = await this.taskService.addTask(input);
-    console.log(taskAdded);
+    // console.log(taskAdded);
     await this.pubSub.publish('taskAdded', { taskAdded: taskAdded });
     return taskAdded;
   }
