@@ -16,16 +16,29 @@ export class Task {
 
   @Field()
   creationDate: Date;
-}
 
-export const TASKS = [
-  {
-    id: '1',
-    title: 'Task #1',
-    description: 'This is the description for the task #1',
-    completed: false,
-    creationDate: new Date('2019-06-12T03:29:56.901Z'),
-  },
+  constructor(
+    id: string,
+    title: string,
+    description: string,
+    completed: boolean,
+  ) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.completed = completed;
+    this.creationDate = new Date(1560310196901);
+  }
+}
+const task1: Task = new Task(
+  '1',
+  'Task #1',
+  'This is the description for the task #1',
+  false,
+);
+export const TASKS: Task[] = [
+  task1,
+  /*
   {
     id: '2',
     title: 'Task #2',
@@ -68,4 +81,6 @@ export const TASKS = [
     completed: false,
     creationDate: new Date('2019-06-12T03:29:56.901Z'),
   },
+
+   */
 ];

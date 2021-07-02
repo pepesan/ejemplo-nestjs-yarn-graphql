@@ -12,4 +12,7 @@ export class AddTaskInput {
 
   @Field()
   creationDate: Date;
+
+  @Field()
+  completed: boolean;
 }
