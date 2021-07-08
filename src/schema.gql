@@ -14,9 +14,16 @@ type Task {
   title: String!
   description: String!
   completed: Boolean!
+  creationDate: Timestamp!
 }
 
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
 type Query {
+  getUsers: [User!]!
   user(userId: String!): User
   getTasks: [Task!]!
   getTask(id: String!): Task!
@@ -26,17 +33,20 @@ type Mutation {
   createUser(createUserData: CreateUserInput!): User!
   addTask(input: AddTaskInput!): Task!
   updateTask(input: AddTaskInput!, id: String!): Task!
-  deleteTask(id: String!): [Task!]!
+  deleteTask(id: String!): Task!
 }
 
 input CreateUserInput {
   email: String!
   age: Float!
+  isSubscribed: Boolean
 }
 
 input AddTaskInput {
   title: String!
   description: String!
+  creationDate: Timestamp!
+  completed: Boolean!
 }
 
 type Subscription {

@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { TasksModule } from './tasks/tasks.module';
 import { PubSub } from 'apollo-server-express';
+import { LoggingPluginService } from './logging-plugin/logging-plugin.service';
 
 @Module({
   imports: [
@@ -15,6 +16,9 @@ import { PubSub } from 'apollo-server-express';
       installSubscriptionHandlers: true,
       subscriptions: {
         keepAlive: 5000,
+      },
+      buildSchemaOptions: {
+        dateScalarMode: 'timestamp', // maneja las fechas con TS
       },
     }),
     UsersModule,
@@ -27,6 +31,7 @@ import { PubSub } from 'apollo-server-express';
       provide: 'PUB_SUB',
       useValue: new PubSub(),
     },
+    // LoggingPluginService,
   ],
 })
 export class AppModule {}

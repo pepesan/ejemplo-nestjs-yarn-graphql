@@ -23,6 +23,7 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+[Ejemplo base](https://medium.com/libertyit/why-graphql-implementation-of-a-graphql-api-on-the-nestjs-framework-eace5adb4d1e)
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 

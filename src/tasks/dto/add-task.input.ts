@@ -9,4 +9,10 @@ export class AddTaskInput {
 
   @Field()
   description: string;
+
+  @Field()
+  creationDate: Date;
+
+  @Field()
+  completed: boolean;
 }

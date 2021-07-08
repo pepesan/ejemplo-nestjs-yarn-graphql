@@ -1,16 +1,22 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { TasksService } from './tasks.service';
 import { AddTaskInput } from './dto/add-task.input';
-// import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './models/task';
 import { PubSub } from 'apollo-server-express';
-
-
 
 @Resolver((of) => 'Tasks')
 export class TasksResolver {
   private pubSub = new PubSub();
   constructor(private readonly taskService: TasksService) {}
+  /*
+  Ejemplo de consulta de subscripción
+  subscription {
+    taskAdded{
+      id
+      title
+    }
+  }
+   */
 
   @Subscription((returns) => Task)
   async taskAdded() {
@@ -61,7 +67,7 @@ export class TasksResolver {
   @Mutation((type) => Task)
   async addTask(@Args('input') input: AddTaskInput) {
     const taskAdded = await this.taskService.addTask(input);
-    console.log(taskAdded);
+    // console.log(taskAdded);
     await this.pubSub.publish('taskAdded', { taskAdded: taskAdded });
     return taskAdded;
   }
@@ -92,7 +98,7 @@ export class TasksResolver {
       }
     }
    */
-  @Mutation((type) => [Task])
+  @Mutation((type) => Task)
   async deleteTask(@Args('id') id: string) {
     return this.taskService.deleteTask(id);
   }
